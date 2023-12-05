@@ -1,8 +1,8 @@
 <?php
 return [
     'modules' => [
-        'sberbank' => [
-            'class' => \skeeks\cms\shop\sberbank\SberbankModule::class
+        'alfabank' => [
+            'class' => \skeeks\cms\shop\alfabank\AlfabankModule::class
         ],
     ],
 ];

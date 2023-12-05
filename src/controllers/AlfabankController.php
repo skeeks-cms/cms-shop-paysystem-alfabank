@@ -8,9 +8,9 @@
 
 namespace skeeks\cms\shop\alfabank\controllers;
 
+use skeeks\cms\shop\alfabank\AlfabankPaysystemHandler;
 use skeeks\cms\shop\models\ShopBill;
 use skeeks\cms\shop\models\ShopPayment;
-use skeeks\cms\shop\sberbank\SberbankPaysystemHandler;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -28,7 +28,6 @@ class AlfabankController extends Controller
      * @var bool
      */
     public $enableCsrfValidation = false;
-
 
 
     public function actionSuccess()
@@ -58,7 +57,7 @@ class AlfabankController extends Controller
         /**
          * Оплата произведена
          */
-        if (ArrayHelper::getValue($response, 'orderStatus') == SberbankPaysystemHandler::ORDER_STATUS_2 && ArrayHelper::getValue($response, 'orderNumber') == $bill->id) {
+        if (ArrayHelper::getValue($response, 'orderStatus') == AlfabankPaysystemHandler::ORDER_STATUS_2 && ArrayHelper::getValue($response, 'orderNumber') == $bill->id) {
 
             $transaction = \Yii::$app->db->beginTransaction();
 
@@ -100,14 +99,14 @@ class AlfabankController extends Controller
 
         }
 
-        return $this->redirect(Url::toRoute(['/sberbank/sberbank/fail', 'code' => $code, 'response' => Json::encode($response)], true));
+        return $this->redirect(Url::toRoute(['/alfabank/alfabank/fail', 'code' => $code, 'response' => Json::encode($response)], true));
     }
 
 
 
     public function actionFail()
     {
-        \Yii::warning("Sberbank fail: ".print_r(\Yii::$app->request->get(), true), self::class);
+        \Yii::warning("Alfabank fail: ".print_r(\Yii::$app->request->get(), true), self::class);
 
         /**
          * @var $bill ShopBill
@@ -119,6 +118,9 @@ class AlfabankController extends Controller
         if (!$bill = ShopBill::find()->where(['code' => $code])->one()) {
             throw new Exception('Bill not found');
         }
+
+        $bill->closed_at = time();
+        $bill->update(false, ['closed_at']);
 
         return $this->redirect($bill->shopOrder->getPublicUrl(\Yii::$app->request->get()));
     }
