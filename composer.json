@@ -1,0 +1,37 @@
+{
+	"name": "skeeks/cms-shop-paysystem-alfabank",
+	"description": "Способ оплаты alfabank для SkeekS CMS",
+	"keywords": ["yii", "skeeks", "framework", "component"],
+    "homepage": "https://cms.skeeks.com/",
+	"type": "yii2-extension",
+	"license": "BSD-3-Clause",
+	"support": {
+        "issues": "https://skeeks.com/"
+    },
+	"authors": [
+		{
+			"name": "Semenov Alexander",
+			"email": "semenov@skeeks.com"
+		}
+	],
+	"require": {
+	  	"skeeks/cms-shop": "^3.0 || dev-master"
+	},
+    "autoload": {
+        "psr-4": {
+            "skeeks\\cms\\shop\\alfabank\\": "src/"
+        }
+    },
+	"extra": {
+        "config-plugin": {
+            "web": [
+                "src/config/common.php",
+                "src/config/web.php"
+            ],
+            "console": [
+                "src/config/common.php",
+                "src/config/console.php"
+            ]
+        }
+    }
+}
