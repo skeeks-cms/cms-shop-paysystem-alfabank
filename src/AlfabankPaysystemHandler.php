@@ -26,7 +26,8 @@ class AlfabankPaysystemHandler extends PaysystemHandler
      */
     const ORDER_STATUS_2 = 2; //Проведена полная авторизация суммы заказа
 
-    public $gatewayUrl = 'https://alfa.rbsuat.com/payment/rest/';
+    //public $gatewayUrl = 'https://alfa.rbsuat.com/payment/rest/';
+    public $gatewayUrl = 'https://payment.alfabank.ru/payment/rest/';
 
     public $currency = 'RUB';
     public $username = '';
